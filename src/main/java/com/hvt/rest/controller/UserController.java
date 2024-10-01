@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hvt.rest.entities.User;
 import com.hvt.rest.repository.UserRepository;
 import com.hvt.rest.services.UserService;
+import com.hvt.rest.services.UserServiceImplementation;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,19 +16,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController //Following annotation is needed in order to allow the URL mapping
 public class UserController {
     
-    // @Autowired
-    // UserService userService;
+    @Autowired
+    UserServiceImplementation userServiceImplementation;
     @GetMapping("/users")
     String  getUsers(){
-        // userService.getAllUsers();
+        userServiceImplementation.getAllUsers();;
         return "This is our user data";
     }
     @PostMapping("create/user")
-    public String postUser(@RequestBody String entity) {
+    public String postUser(@RequestBody User entity) {
         //TODO: process POST request
-        // userService.createUser();
+        userServiceImplementation.createUser(entity);
         
-        return entity;
+        return "entity";
     }
     @PutMapping("user/{id}")
     public String updateUser(@PathVariable String id, @RequestBody String entity) {
