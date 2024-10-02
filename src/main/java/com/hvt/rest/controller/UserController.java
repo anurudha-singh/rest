@@ -1,5 +1,9 @@
 package com.hvt.rest.controller;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,21 +23,20 @@ public class UserController {
     @Autowired
     UserServiceImplementation userServiceImplementation;
     @GetMapping("/users")
-    String  getUsers(){
-        userServiceImplementation.getAllUsers();;
-        return "This is our user data";
+    List<User>  getUsers(){
+       return  userServiceImplementation.getAllUsers();
+        // return "This is our user data";
     }
     @PostMapping("create/user")
-    public String postUser(@RequestBody User entity) {
-        //TODO: process POST request
-        userServiceImplementation.createUser(entity);
-        
-        return "entity";
+    public ResponseEntity<User> postUser(@RequestBody User user) {
+        System.out.println("At line 35");
+        System.out.println(user);
+       return new ResponseEntity<User>(userServiceImplementation.createUser(user), HttpStatus.CREATED);
     }
     @PutMapping("user/{id}")
     public String updateUser(@PathVariable String id, @RequestBody String entity) {
         //TODO: process PUT request
-        // userService.updateUser();
+        userServiceImplementation.updateUser(Integer.parseInt(id));
         
         return entity;
     }
