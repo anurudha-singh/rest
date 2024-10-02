@@ -2,6 +2,7 @@ package com.hvt.rest.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.hvt.rest.entities.Contact;
@@ -65,9 +66,12 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User deleteUser(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+    public void deleteUser(int id) {
+   //check
+   userRepository.findById(id).orElseThrow(()-> new RuntimeException());
+   //delete
+    userRepository.deleteById(id);
+
     }
 
     // @Override
