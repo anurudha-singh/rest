@@ -10,6 +10,6 @@ import com.hvt.rest.entities.User;
 public interface UserService   {
     public List<User> getAllUsers();
     public User createUser(User user);
-    public User updateUser(int id);
+    public User updateUser(int id,User user);
     public User deleteUser(int id);
 }

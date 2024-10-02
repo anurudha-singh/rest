@@ -34,12 +34,11 @@ public class UserController {
        return new ResponseEntity<User>(userServiceImplementation.createUser(user), HttpStatus.CREATED);
     }
     @PutMapping("user/{id}")
-    public String updateUser(@PathVariable String id, @RequestBody String entity) {
+    public User updateUser(@PathVariable String id, @RequestBody User user) {
         //TODO: process PUT request
-        userServiceImplementation.updateUser(Integer.parseInt(id));
-        
-        return entity;
+     return  userServiceImplementation.updateUser(Integer.parseInt(id), user);
     }
+
     @DeleteMapping("user/{id}")
     public String deleteUser(@PathVariable int id){
 // userService.deleteUser();

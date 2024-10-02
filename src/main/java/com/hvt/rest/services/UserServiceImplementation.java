@@ -21,39 +21,47 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUser(int id) {
+    public User updateUser(int id, User updatedUser) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
-        System.out.print(existingUser);
-        existingUser.setID(200);
-        existingUser.setName("Anurudh Singh");
-        existingUser.setEmail("hexa@gmail.com");
-        existingUser.setAbout("Full stack developer");
-        // existingUser.setContact(new Contact(id, "Ani", "Mobile development",
-        // "test@gmail.com", "1234567890", existingUser));
-        return existingUser;
+        
+        existingUser.setName(updatedUser.getName());
+        existingUser.setEmail(updatedUser.getEmail());
+        existingUser.setAbout(updatedUser.getAbout());
+        
+        Contact existingContact = existingUser.getContact();
+        Contact updatedContact = updatedUser.getContact();
+        
+        existingContact.setName(updatedContact.getName());
+        existingContact.setEmail(updatedContact.getEmail());
+        existingContact.setPhone(updatedContact.getPhone());
+        existingContact.setWork(updatedContact.getWork());
+        
+        // Save the user and contact
+        return userRepository.save(existingUser);
     }
 
     @Override
     public User createUser(User user) {
         User userObj = new User();
-        userObj.setName("Jane Smith");
-        userObj.setEmail("janesmith@example.com");
-        userObj.setAbout("A brief description about Jane Smith.");
+        userObj.setName(user.getName());
+        userObj.setEmail(user.getEmail());
+        userObj.setAbout(user.getAbout());
+
+        // User userObj = new User();
+        // userObj.setName("Jane Smith");
+        // userObj.setEmail("janesmith@example.com");
+        // userObj.setAbout("A brief description about Jane Smith.");
         
         Contact contact = new Contact();
-        contact.setName("Jane Smith");
-        contact.setWork("Project Manager");
-        contact.setEmail("janesmith@work.com");
-        contact.setPhone("987-654-3210");
+        contact.setName(user.getContact().getName());
+        contact.setWork(user.getContact().getWork());
+        contact.setEmail(user.getContact().getEmail());
+        contact.setPhone(user.getContact().getPhone());
         
         // Set the reference back to the user
         contact.setUsers(user);
         user.setContact(contact); // Set contact back to the user
-        
         return userRepository.save(user);
-        
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'createUser'");
     }
 
     @Override
